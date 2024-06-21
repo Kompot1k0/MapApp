@@ -14,8 +14,12 @@ struct LocationsListView: View {
     var body: some View {
         List {
             ForEach(vm.locations) { location in
-                listRow(for: location)
-                    .listRowBackground(Color.clear)
+                Button {
+                    vm.showSelectedLocation(location: location)
+                } label: {
+                    listRow(for: location)
+                }
+                .listRowBackground(Color.clear)
             }
         }
         .cornerRadius(10)

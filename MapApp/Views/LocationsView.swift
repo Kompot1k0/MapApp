@@ -41,6 +41,9 @@ extension LocationsView {
                         .padding()
                         .rotationEffect(Angle(degrees: vm.isListShowing ? 180 : 0) )
                 }
+                .onTapGesture {
+                    vm.changeIsListShowing()
+                }
             
             if vm.isListShowing {
                 LocationsListView()
@@ -50,9 +53,6 @@ extension LocationsView {
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.6), radius: 20, x: 0, y: 15)
         .padding()
-        .onTapGesture {
-            vm.changeIsListShowing()
-        }
     }
     
     private var map: some View {

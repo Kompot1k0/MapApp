@@ -56,4 +56,11 @@ class LocationsViewModel: ObservableObject {
             isListShowing.toggle()
         }
     }
+    
+    func showSelectedLocation(location: Location) {
+        withAnimation(.easeInOut) {
+            mapLocation = location
+            isListShowing = false
+        }
+    }
 }
