@@ -17,6 +17,8 @@ struct LocationsListView: View {
                 listRow(for: location)
             }
         }
+        .cornerRadius(10)
+        .padding()
         .listStyle(.plain)
     }
 }
