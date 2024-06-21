@@ -10,7 +10,7 @@ import MapKit
 
 struct LocationsView: View {
     
-    @EnvironmentObject var vm: LocationsViewModel
+    @EnvironmentObject private var vm: LocationsViewModel
     
     var body: some View {
         ZStack {
@@ -18,6 +18,7 @@ struct LocationsView: View {
             
             VStack {
                 header
+                
                 Spacer()
             }
         }
@@ -27,17 +28,31 @@ struct LocationsView: View {
 
 extension LocationsView {
     private var header: some View {
-        Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
-            .font(.title2)
-            .fontWeight(.black)
-            .foregroundColor(.primary)
-            .frame(height: 50)
-            .frame(maxWidth: .infinity)
-            .background(.ultraThinMaterial)
-            .cornerRadius(10)
-            .shadow(color: .black.opacity(0.6), radius: 20, x: 0, y: 15)
-            .padding()
-
+        VStack {
+            Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
+                .font(.title2)
+                .fontWeight(.black)
+                .foregroundColor(.primary)
+                .frame(height: 50)
+                .frame(maxWidth: .infinity)
+                
+                .overlay(alignment: .leading) {
+                    Image(systemName: vm.isListShowing ? "arrow.up" : "arrow.down")
+                        .padding()
+                        .rotationEffect(Angle(degrees: vm.isListShowing ? 180 : 0) )
+                }
+            
+            if vm.isListShowing {
+                LocationsListView()
+            }
+        }
+        .background(.ultraThinMaterial)
+        .cornerRadius(10)
+        .shadow(color: .black.opacity(0.6), radius: 20, x: 0, y: 15)
+        .padding()
+        .onTapGesture {
+            vm.changeIsListShowing()
+        }
     }
     
     private var map: some View {

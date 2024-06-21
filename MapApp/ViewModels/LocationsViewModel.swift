@@ -23,6 +23,8 @@ class LocationsViewModel: ObservableObject {
     @Published var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
+    @Published private(set) var isListShowing: Bool = false
+    
     init() {
         let locations = LocationsDataService.locations
         let defaultLocation = Location(
@@ -46,6 +48,12 @@ class LocationsViewModel: ObservableObject {
             mapRegion = MKCoordinateRegion(
                 center: location.coordinates,
                 span: mapSpan)
+        }
+    }
+    
+    func changeIsListShowing() {
+        withAnimation(.easeInOut) {
+            isListShowing.toggle()
         }
     }
 }

@@ -15,11 +15,12 @@ struct LocationsListView: View {
         List {
             ForEach(vm.locations) { location in
                 listRow(for: location)
+                    .listRowBackground(Color.clear)
             }
         }
         .cornerRadius(10)
-        .padding()
         .listStyle(.plain)
+        .transition(AnyTransition.opacity)
     }
 }
 
