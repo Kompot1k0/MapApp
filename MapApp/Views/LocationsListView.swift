@@ -17,6 +17,7 @@ struct LocationsListView: View {
                 listRow(for: location)
             }
         }
+        .listStyle(.plain)
     }
 }
 
