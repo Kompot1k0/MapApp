@@ -15,11 +15,19 @@ struct LocationsView: View {
     var body: some View {
         ZStack {
             map
-            
             VStack {
                 header
-                
                 Spacer()
+                ForEach(vm.locations, content: { location in
+                    if vm.mapLocation == location {
+                        LocationPreviewView(location: location)
+                            .shadow(color: .black.opacity(0.6), radius: 20)
+                            .padding()
+                            .transition(.asymmetric(
+                                insertion: .move(edge: .leading),
+                                removal: .move(edge: .trailing)))
+                    }
+                })
             }
         }
     }
