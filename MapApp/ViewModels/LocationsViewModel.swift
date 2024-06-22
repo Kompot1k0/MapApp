@@ -63,4 +63,17 @@ class LocationsViewModel: ObservableObject {
             isListShowing = false
         }
     }
+    
+    func nextButtonPressed() {
+        guard let currentLocationIndex = locations.firstIndex(where: { $0.id == mapLocation.id }) else {return}
+        
+        // handle case where current location is last in array
+        if currentLocationIndex == locations.count - 1 {
+            if let nextLocation = locations.first {
+                mapLocation = nextLocation
+            }
+        } else {
+            mapLocation = locations[currentLocationIndex + 1]
+        }
+    }
 }
