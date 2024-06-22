@@ -55,7 +55,16 @@ extension LocationsView {
     }
     
     private var map: some View {
-        Map(coordinateRegion: $vm.mapRegion)
+        Map(coordinateRegion: $vm.mapRegion,
+            annotationItems: vm.locations,
+            annotationContent: { location in
+//            MapMarker(coordinate: location.coordinates,
+//                      tint: .accentColor)
+            MapAnnotation(coordinate: location.coordinates,
+                          content: {
+                CustomMapMarkerView()
+            })
+        })
             .ignoresSafeArea()
     }
     
