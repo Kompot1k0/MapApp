@@ -35,7 +35,7 @@ extension LocationsView {
                 .foregroundColor(.primary)
                 .frame(height: 50)
                 .frame(maxWidth: .infinity)
-                
+                .animation(.none, value: vm.mapLocation)
                 .overlay(alignment: .leading) {
                     Image(systemName: vm.isListShowing ? "arrow.up" : "arrow.down")
                         .padding()
