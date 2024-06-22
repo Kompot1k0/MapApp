@@ -70,12 +70,16 @@ class LocationsViewModel: ObservableObject {
         // handle case where current location is last in array
         if currentLocationIndex == locations.count - 1 {
             if let nextLocation = locations.first {
-                mapLocation = nextLocation
-                isListShowing = false
+                withAnimation(.easeInOut) {
+                    mapLocation = nextLocation
+                    isListShowing = false
+                }
             }
         } else {
-            mapLocation = locations[currentLocationIndex + 1]
-            isListShowing = false
+            withAnimation(.easeInOut) {
+                mapLocation = locations[currentLocationIndex + 1]
+                isListShowing = false
+            }
         }
     }
 }
