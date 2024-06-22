@@ -18,16 +18,7 @@ struct LocationsView: View {
             VStack {
                 header
                 Spacer()
-                ForEach(vm.locations, content: { location in
-                    if vm.mapLocation == location {
-                        LocationPreviewView(location: location)
-                            .shadow(color: .black.opacity(0.6), radius: 20)
-                            .padding()
-                            .transition(.asymmetric(
-                                insertion: .move(edge: .leading),
-                                removal: .move(edge: .trailing)))
-                    }
-                })
+                footer
             }
         }
     }
@@ -66,6 +57,19 @@ extension LocationsView {
     private var map: some View {
         Map(coordinateRegion: $vm.mapRegion)
             .ignoresSafeArea()
+    }
+    
+    private var footer: some View {
+        ForEach(vm.locations, content: { location in
+            if vm.mapLocation == location {
+                LocationPreviewView(location: location)
+                    .shadow(color: .black.opacity(0.6), radius: 20)
+                    .padding()
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .leading),
+                        removal: .move(edge: .trailing)))
+            }
+        })
     }
 }
 
