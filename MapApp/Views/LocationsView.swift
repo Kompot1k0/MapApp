@@ -63,6 +63,10 @@ extension LocationsView {
             MapAnnotation(coordinate: location.coordinates,
                           content: {
                 CustomMapMarkerView()
+                    .scaleEffect(location == vm.mapLocation ? 1 : 0.7)
+                    .onTapGesture {
+                        vm.showSelectedLocation(location: location)
+                    }
             })
         })
             .ignoresSafeArea()
