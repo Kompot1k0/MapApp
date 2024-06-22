@@ -71,9 +71,11 @@ class LocationsViewModel: ObservableObject {
         if currentLocationIndex == locations.count - 1 {
             if let nextLocation = locations.first {
                 mapLocation = nextLocation
+                isListShowing = false
             }
         } else {
             mapLocation = locations[currentLocationIndex + 1]
+            isListShowing = false
         }
     }
 }
