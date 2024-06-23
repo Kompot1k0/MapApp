@@ -24,6 +24,7 @@ class LocationsViewModel: ObservableObject {
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     @Published private(set) var isListShowing: Bool = false
+    @Published var isLearnMoreSheetShowing: Bool = false
     
     init() {
         let locations = LocationsDataService.locations
@@ -80,6 +81,12 @@ class LocationsViewModel: ObservableObject {
                 mapLocation = locations[currentLocationIndex + 1]
                 isListShowing = false
             }
+        }
+    }
+    
+    func changeisLearnMoreSheetShowing() {
+        withAnimation(.easeInOut) {
+            isLearnMoreSheetShowing.toggle()
         }
     }
 }

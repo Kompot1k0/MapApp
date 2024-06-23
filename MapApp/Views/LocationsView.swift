@@ -12,6 +12,8 @@ struct LocationsView: View {
     
     @EnvironmentObject private var vm: LocationsViewModel
     
+    
+    
     var body: some View {
         ZStack {
             map
@@ -20,6 +22,9 @@ struct LocationsView: View {
                 Spacer()
                 footer
             }
+        }
+        .sheet(isPresented: $vm.isLearnMoreSheetShowing) {
+            LocationDetailView(location: vm.mapLocation)
         }
     }
 }
@@ -58,8 +63,6 @@ extension LocationsView {
         Map(coordinateRegion: $vm.mapRegion,
             annotationItems: vm.locations,
             annotationContent: { location in
-//            MapMarker(coordinate: location.coordinates,
-//                      tint: .accentColor)
             MapAnnotation(coordinate: location.coordinates,
                           content: {
                 CustomMapMarkerView()
