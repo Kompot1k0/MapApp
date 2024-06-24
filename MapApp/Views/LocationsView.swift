@@ -11,7 +11,7 @@ import MapKit
 struct LocationsView: View {
     
     @EnvironmentObject private var vm: LocationsViewModel
-    
+    let maxWidthForIPad: CGFloat = 600
     
     
     var body: some View {
@@ -57,6 +57,7 @@ extension LocationsView {
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.6), radius: 20, x: 0, y: 15)
         .padding()
+        .frame(maxWidth: maxWidthForIPad)
     }
     
     private var map: some View {
@@ -81,6 +82,8 @@ extension LocationsView {
                 LocationPreviewView(location: location)
                     .shadow(color: .black.opacity(0.6), radius: 20)
                     .padding()
+                    .frame(maxWidth: maxWidthForIPad)
+                    .frame(maxWidth: .infinity)
                     .transition(.asymmetric(
                         insertion: .move(edge: .leading),
                         removal: .move(edge: .trailing)))
