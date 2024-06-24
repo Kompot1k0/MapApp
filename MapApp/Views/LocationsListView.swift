@@ -24,7 +24,6 @@ struct LocationsListView: View {
         }
         .cornerRadius(10)
         .listStyle(.plain)
-        .transition(AnyTransition.opacity)
     }
 }
 

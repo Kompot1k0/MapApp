@@ -11,16 +11,20 @@ import MapKit
 struct LocationsView: View {
     
     @EnvironmentObject private var vm: LocationsViewModel
+    let maxWidthForIPad: CGFloat = 600
+    
     
     var body: some View {
         ZStack {
             map
-            
             VStack {
                 header
-                
                 Spacer()
+                footer
             }
+        }
+        .sheet(isPresented: $vm.isLearnMoreSheetShowing) {
+            LocationDetailView(location: vm.mapLocation)
         }
     }
 }
@@ -53,11 +57,38 @@ extension LocationsView {
         .cornerRadius(10)
         .shadow(color: .black.opacity(0.6), radius: 20, x: 0, y: 15)
         .padding()
+        .frame(maxWidth: maxWidthForIPad)
     }
     
     private var map: some View {
-        Map(coordinateRegion: $vm.mapRegion)
+        Map(coordinateRegion: $vm.mapRegion,
+            annotationItems: vm.locations,
+            annotationContent: { location in
+            MapAnnotation(coordinate: location.coordinates,
+                          content: {
+                CustomMapMarkerView()
+                    .scaleEffect(location == vm.mapLocation ? 1 : 0.7)
+                    .onTapGesture {
+                        vm.showSelectedLocation(location: location)
+                    }
+            })
+        })
             .ignoresSafeArea()
+    }
+    
+    private var footer: some View {
+        ForEach(vm.locations, content: { location in
+            if vm.mapLocation == location {
+                LocationPreviewView(location: location)
+                    .shadow(color: .black.opacity(0.6), radius: 20)
+                    .padding()
+                    .frame(maxWidth: maxWidthForIPad)
+                    .frame(maxWidth: .infinity)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .leading),
+                        removal: .move(edge: .trailing)))
+            }
+        })
     }
 }
 

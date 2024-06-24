@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 import SwiftUI
 
+@MainActor
 class LocationsViewModel: ObservableObject {
     // all downloaded locations
     @Published var locations: [Location]
@@ -24,6 +25,7 @@ class LocationsViewModel: ObservableObject {
     let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
     
     @Published private(set) var isListShowing: Bool = false
+    @Published var isLearnMoreSheetShowing: Bool = false
     
     init() {
         let locations = LocationsDataService.locations
@@ -61,6 +63,31 @@ class LocationsViewModel: ObservableObject {
         withAnimation(.easeInOut) {
             mapLocation = location
             isListShowing = false
+        }
+    }
+    
+    func nextButtonPressed() {
+        guard let currentLocationIndex = locations.firstIndex(where: { $0.id == mapLocation.id }) else {return}
+        
+        // handle case where current location is last in array
+        if currentLocationIndex == locations.count - 1 {
+            if let nextLocation = locations.first {
+                withAnimation(.easeInOut) {
+                    mapLocation = nextLocation
+                    isListShowing = false
+                }
+            }
+        } else {
+            withAnimation(.easeInOut) {
+                mapLocation = locations[currentLocationIndex + 1]
+                isListShowing = false
+            }
+        }
+    }
+    
+    func changeisLearnMoreSheetShowing() {
+        withAnimation(.easeInOut) {
+            isLearnMoreSheetShowing.toggle()
         }
     }
 }
